@@ -85,7 +85,6 @@ public class OneTo25Activity extends AppCompatActivity {
             btnRe.setEnabled(true);
             btnRe.setVisibility(View.VISIBLE);
             btnStart.setVisibility(View.GONE);
-
             //기록 저장하기
             SharedPreferences sharedPreferences= getSharedPreferences("record1", MODE_PRIVATE);
             SharedPreferences.Editor editor=sharedPreferences.edit();
