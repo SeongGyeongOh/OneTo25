@@ -9,13 +9,21 @@
     <TextView
         android:id="@+id/tv"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="65dp"
         android:text="1 to 50"
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"/>
+    <Button
+        android:id="@+id/btnBack2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="@drawable/btn_bg3"
+        android:visibility="gone"/>
 
     <GridLayout
         android:id="@+id/grid"
@@ -278,16 +286,6 @@
         android:layout_margin="4dp"
         android:background="@drawable/btn"/>
 
-<!--    <Button-->
-<!--        app:layout_constraintTop_toBottomOf="@id/btnStart"-->
-<!--        android:id="@+id/btnRe"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:text="retry"-->
-<!--        android:layout_margin="4dp"-->
-<!--        android:visibility="gone"-->
-<!--        android:onClick="clickRetry"-->
-<!--        android:background="@drawable/btn"/>-->
     <Button
         app:layout_constraintTop_toBottomOf="@id/btnStart"
         android:id="@+id/btnMain"

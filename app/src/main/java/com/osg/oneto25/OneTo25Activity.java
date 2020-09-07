@@ -1,5 +1,6 @@
 package com.osg.oneto25;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -39,6 +40,9 @@ public class OneTo25Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_oneto25);
+
+        ActionBar actionBar=getSupportActionBar();
+        actionBar.setTitle("1-25");
 
         tv = findViewById(R.id.tv);
         stopWatch=findViewById(R.id.tvStopWatch);
@@ -80,11 +84,12 @@ public class OneTo25Activity extends AppCompatActivity {
         //모든 번호를 다 누른다면....
         if (cnt > 25) {
             isRun=false;
-            int result=ms+(s*100)+(m*6000);
+            int result=ms+(s*10)+(m*600);
 
             btnRe.setEnabled(true);
             btnRe.setVisibility(View.VISIBLE);
             btnStart.setVisibility(View.GONE);
+
             //기록 저장하기
             SharedPreferences sharedPreferences= getSharedPreferences("record1", MODE_PRIVATE);
             SharedPreferences.Editor editor=sharedPreferences.edit();
@@ -133,6 +138,7 @@ public class OneTo25Activity extends AppCompatActivity {
     public void clickMain(View view) {
         Intent intent=new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     //스탑워치
@@ -146,7 +152,7 @@ public class OneTo25Activity extends AppCompatActivity {
                     public void run() {
                         Message message=new Message();
                         message.arg1=time++;
-                        ms=message.arg1%100;
+                        ms=message.arg1%10;
                         s=(message.arg1/100)%60;
                         m=(message.arg1/100)/60;
                         String result=String.format("%02d : %02d : %02d", m, s, ms );
@@ -167,9 +173,24 @@ public class OneTo25Activity extends AppCompatActivity {
         SharedPreferences sharedPreferences=getSharedPreferences("record1", MODE_PRIVATE);
         int highscore=sharedPreferences.getInt("25", 0);
         int min=highscore/6000;
-        int sec=highscore%6000/100;
-        int mil=highscore%6000%100;
+        int sec=highscore%6000/10;
+        int mil=highscore%6000%10;
 
         tv.setText("최고 기록 " +min+" : "+sec+" : "+mil);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopThread();
+    }
+
+    public void stopThread(){
+        isRun=false;
+    }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
     }
 }
