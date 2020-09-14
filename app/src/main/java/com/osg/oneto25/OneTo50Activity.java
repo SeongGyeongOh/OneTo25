@@ -33,8 +33,8 @@ public class OneTo50Activity extends AppCompatActivity {
 
     Drawable btnBack, btnBack2;
 
-    static int index = 0;
-    int cnt = 1;
+    int index;
+    int cnt;
 
     boolean isRun;
     int min = 0;
@@ -63,20 +63,25 @@ public class OneTo50Activity extends AppCompatActivity {
         }
         btnBack = btns[0].getBackground();
 
-        //두 번째 랜덤 숫자 생성
-        for (int i = 26; i <= 50; i++) nums.add(i);
-        Collections.shuffle(nums);
-
-        //화면 초기화
-        initial();
     }
 
     public void initial() {
+        time=0;
+        cnt=1;
+        index=0;
+
         ArrayList<Integer> nums1 = new ArrayList<>();
         for (int i = 1; i <= 25; i++) {
             nums1.add(i);
         }
         Collections.shuffle(nums1);
+
+        //두 번째 랜덤 숫자 생성
+        nums.clear();
+        for (int i = 26; i <= 50; i++) {
+            nums.add(i);
+        }
+        Collections.shuffle(nums);
 
         for (int i = 0; i < btns.length; i++) {
             btns[i].setText(nums1.get(i).toString());
@@ -86,17 +91,16 @@ public class OneTo50Activity extends AppCompatActivity {
             btns[i].setTag(nums1.get(i));
         }
 
+        TimeThread timeThread=new TimeThread();
+        timeThread.start();
     }
 
     public void clickStart(View view) {
         initial();
-        for (int i = 0; i < btns.length; i++) {
-            btns[i].setClickable(true);
+        for (Button btn : btns) {
+            btn.setClickable(true);
         }
         btnStart.setEnabled(false);
-
-        TimeThread timeThread=new TimeThread();
-        timeThread.start();
 
     }
 
@@ -111,7 +115,7 @@ public class OneTo50Activity extends AppCompatActivity {
                 btn.setTag(nums.get(index));
                 index++;
                 cnt++;
-            } else if (cnt > 25 && cnt<=50) {
+            } else if (cnt<=50) {
                 btn.setBackgroundColor(Color.WHITE);
                 btn.setText("OK");
                 index++;
@@ -120,7 +124,7 @@ public class OneTo50Activity extends AppCompatActivity {
         }
 
         if (cnt > 50) {
-            isRun = false;
+            stopThread();
             btnStart.setEnabled(true);
             btnStart.setText("restart");
 
